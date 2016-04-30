@@ -14,7 +14,7 @@ import com.library.model.User;
 import com.library.repository.UserRepository;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserController {
 
 	@Autowired

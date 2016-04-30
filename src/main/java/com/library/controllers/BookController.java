@@ -14,7 +14,7 @@ import com.library.model.Book;
 import com.library.repository.BookRepository;
 
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/api/books")
 public class BookController {
 
 	@Autowired
