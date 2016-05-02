@@ -9,6 +9,7 @@ dist/
 logs/
 node_modules/
 out/
+target/
 tmp/
 
 # files
