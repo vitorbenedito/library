@@ -2,25 +2,26 @@ package com.library;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @ComponentScan
+@EnableAutoConfiguration
 public class MyConfiguration {
 
     @Bean
@@ -38,11 +39,13 @@ public class MyConfiguration {
     }
     
     @Bean
-    public HibernateJpaSessionFactoryBean sessionFactory(EntityManagerFactory emf) {
-         HibernateJpaSessionFactoryBean factory = new HibernateJpaSessionFactoryBean();
-         factory.setEntityManagerFactory(emf);
-         factory.setJpaProperties(jpaProperties());
-         return factory;
+    public LocalSessionFactoryBean sessionFactory() {
+       LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+
+       sessionFactory.setDataSource(dataSource());
+       sessionFactory.setHibernateProperties(hibernateProperties());
+
+       return sessionFactory;
     }
 
     @Bean
@@ -58,21 +61,18 @@ public class MyConfiguration {
        return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    Properties jpaProperties() {
+    Properties hibernateProperties() {
        return new Properties() {
-    	   
-	         private static final long serialVersionUID = 1L;
-	
-	         {
-	             setProperty("spring.jpa.hibernate.ddl-auto", "create");
-	             setProperty("spring.jpa.show-sql", "false");
-	             setProperty("spring.jpa.hibernate.naming-strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-	             setProperty("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-	             setProperty("spring.jpa.datasource.database-platform", "org.hibernate.dialect.MySQL5Dialect");
-	          }
+         private static final long serialVersionUID = 1L;
+
+         {
+             setProperty("hibernate.hbm2ddl.auto", "update");
+             setProperty("hibernate.show_sql", "false");
+             setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+          }
        };
     }
-
+    
     @Bean
     @Primary
     public DataSource dataSource() {
