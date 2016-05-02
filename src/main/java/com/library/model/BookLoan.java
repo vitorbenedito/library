@@ -7,12 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BOOK_LOAN")
@@ -22,16 +21,16 @@ public class BookLoan {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
+	@JoinColumn(name="Book_ID")
     private Book book;
-    
-	@JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+
+    @ManyToOne
+	@JoinColumn(name="User_ID")
     private User user;
 
     @Temporal(value=TemporalType.DATE)
-	private Date loadDate;
+	private Date loanDate = new Date();
 	
     @Temporal(value=TemporalType.DATE)
 	private Date returnDate;
@@ -60,12 +59,12 @@ public class BookLoan {
 		this.user = user;
 	}
 
-	public Date getLoadDate() {
-		return loadDate;
+	public Date getLoanDate() {
+		return loanDate;
 	}
 
-	public void setLoadDate(Date loadDate) {
-		this.loadDate = loadDate;
+	public void setLoanDate(Date loanDate) {
+		this.loanDate = loanDate;
 	}
 
 	public Date getReturnDate() {

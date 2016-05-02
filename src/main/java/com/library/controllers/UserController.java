@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.library.model.BookLoan;
 import com.library.model.User;
+import com.library.repository.BookLoanRepository;
 import com.library.repository.UserRepository;
 
 @Controller
@@ -19,6 +21,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BookLoanRepository bookLoanRepository;
 	
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -48,6 +53,12 @@ public class UserController {
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public void remove(@PathVariable("id") Long id) {
 		userRepository.delete(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/{id}/bookloans", method = RequestMethod.GET, produces = "application/json")
+	public List<BookLoan> findBookLoans(@PathVariable("id") Long id) {
+		return bookLoanRepository.findByUser_IdAndReturnDateIsNull(id);
 	}
 	
 }

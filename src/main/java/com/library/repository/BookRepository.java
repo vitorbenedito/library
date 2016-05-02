@@ -8,5 +8,5 @@ import com.library.model.Book;
 
 @Transactional
 public interface BookRepository extends CrudRepository<Book, Long> {
-
+	
 }

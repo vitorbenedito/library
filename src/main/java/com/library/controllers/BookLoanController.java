@@ -1,5 +1,6 @@
 package com.library.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,14 @@ public class BookLoanController {
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public void remove(@PathVariable("id") Long id) {
 		bookLoanRepository.delete(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/{id}/return", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+	public BookLoan update(@PathVariable("id") Long id) {
+		BookLoan book = bookLoanRepository.findOne(id);
+		book.setReturnDate(new Date());
+		return bookLoanRepository.save(book);
 	}
 	
 }
