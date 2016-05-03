@@ -66,7 +66,7 @@ public class MyConfiguration {
          private static final long serialVersionUID = 1L;
 
          {
-             setProperty("hibernate.hbm2ddl.auto", "update");
+             setProperty("hibernate.hbm2ddl.auto", "create-update");
              setProperty("hibernate.show_sql", "false");
              setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
           }
@@ -78,9 +78,9 @@ public class MyConfiguration {
     public DataSource dataSource() {
         return DataSourceBuilder
             .create()
-            .username("devmute")
-            .password("devmute#33")
-            .url("jdbc:mysql://devmute.cwh2lv5bp1ns.sa-east-1.rds.amazonaws.com:3306/library")
+            .username("")
+            .password("")
+            .url("")
             .driverClassName("com.mysql.jdbc.Driver")
             .build();
     }
