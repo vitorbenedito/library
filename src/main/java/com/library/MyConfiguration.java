@@ -79,8 +79,8 @@ public class MyConfiguration {
         return DataSourceBuilder
             .create()
             .username("")
-            .password("")
-            .url("")
+            .password("devmute#33")
+            .url("jdbc:mysql://devmute.cwh2lv5bp1ns.sa-east-1.rds.amazonaws.com:3306/library")
             .driverClassName("com.mysql.jdbc.Driver")
             .build();
     }
