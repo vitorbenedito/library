@@ -5,7 +5,9 @@ Implementation of a library, with Spring MVC + Spring data + MySQL, deployed on 
 ## Deploy Amazon API
 
 http://library.sa-east-1.elasticbeanstalk.com/api/users
+
 http://library.sa-east-1.elasticbeanstalk.com/api/books
+
 http://library.sa-east-1.elasticbeanstalk.com/api/bookloans
 
 ## Front-end
